@@ -165,5 +165,4 @@ func main() {
 
 	doc.getWordList()
 	doc.writeFile()
-	fmt.Println("done")
 }
