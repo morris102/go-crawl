@@ -14,7 +14,6 @@ import (
 
 type VocalbularyUseCase interface {
 	Crawl(url string) ([]WordHtml, error)
-	Save(items []Word) error
 }
 
 type VocalbularyUseCaseImpl struct {
@@ -72,6 +71,13 @@ func (inst *VocalbularyUseCaseImpl) Crawl(url string) ([]Word, error) {
 	}
 	wg.Wait()
 
+	// save to db
+	err = inst.save(wordItems)
+	if err != nil {
+		log.Printf("VocalbularyUseCaseImpl.save err: %v", err.Error())
+		return nil, err
+	}
+
 	return wordItems, nil
 }
 
@@ -120,7 +126,7 @@ func crawlDetail(url string) (*Word, error) {
 	return word, nil
 }
 
-func (inst *VocalbularyUseCaseImpl) Save(items []Word) error {
+func (inst *VocalbularyUseCaseImpl) save(items []Word) error {
 	if len(items) == 0 {
 		return errors.New("cannot found items")
 	}
