@@ -34,23 +34,25 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh "docker build -t ${IMAGE_NAME}:${TAG} ."
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+        //     }
+        // }
 
-        stage('Push to Docker Hub') {
-            steps {
-                sh "docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:${TAG}"
-                sh "docker push ${IMAGE_NAME}:${TAG}"
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         sh "docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:${TAG}"
+        //         sh "docker push ${IMAGE_NAME}:${TAG}"
+        //     }
+        // }
     }
 
-    post {
-        always {
+   post {
+    always {
+        node {
             sh 'docker logout'
         }
     }
+}
 }
