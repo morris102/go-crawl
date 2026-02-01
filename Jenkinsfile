@@ -11,6 +11,7 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 sh '''
+                    #!/bin/bash
                     set -a
                     source .env
                     set +a
