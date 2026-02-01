@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USERNAME = credentials('docker-hub-username')
-        DOCKER_HUB_PASSWORD = credentials('docker-hub-password')
+        DOCKER_HUB = credentials('docker-hub-credential')
         IMAGE_NAME = 'your-username/go-crawl'
         TAG = 'latest'
     }
@@ -30,7 +29,7 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
+                sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB_USR --password-stdin'
             }
         }
 
